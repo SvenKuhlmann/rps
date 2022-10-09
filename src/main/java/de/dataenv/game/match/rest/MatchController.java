@@ -3,7 +3,6 @@ package de.dataenv.game.match.rest;
 import de.dataenv.game.match.domain.MatchEntity;
 import de.dataenv.game.match.domain.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

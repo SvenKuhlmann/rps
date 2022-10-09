@@ -1,7 +1,6 @@
 package de.dataenv.game.match.rest;
 
 import de.dataenv.game.match.domain.MatchEntity;
-import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
