@@ -1,6 +1,6 @@
 # Rock Paper Scissor
 
-This is a Web Application simulating the popular game
+This is a Web Application simulating the popular game.
 
 ## Build
 
@@ -8,11 +8,21 @@ To create a docker image of the web application use the following command:
 
 ```gradle bootBuildImage```
 
+## Frontend
+
+The [frontend sources](
+https://github.com/SvenKuhlmann/rps_frontend
+) are stored in a different git.
+
+Build the frontend via script:
+
+```./build_frontend```
+
 ## Hosting
 
 ### Docker
 
-To run the application in docker call:
+Run the application using docker:
 
 ```docker run -p 8080:8080 docker.dataenv.de/game:0.0.1-SNAPSHOT```
 
