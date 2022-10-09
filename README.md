@@ -1,6 +1,7 @@
 # Rock Paper Scissor
 
 This is a Web Application simulating the popular game.
+[Play The Game](https://rock-paper-scissor.dataenv.de/)
 
 ## Build
 
