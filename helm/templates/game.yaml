@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: game
+  template:
+    metadata:
+      labels:
+        name: game
+    spec:
+      imagePullSecrets:
+      - name: docker
+      containers:
+        - name: game
+          image: "docker.dataenv.de/game:{{ .Chart.AppVersion }}"
+          imagePullPolicy: Always
+          ports:
+            - name: app
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: app
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: game
+spec:
+  selector:
+    name: game
+  ports:
+    - name: app
+      protocol: TCP
+      port: 8000
+      targetPort: app
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: backend-ingress-route
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      match:  Host(`{{ .Values.game.domain }}`)
+      priority: 100
+      services:
+        - name: game
+          port: 8000
+  {{ if .Values.tls.secretName }}
+  tls:
+    secretName: {{ .Values.tls.secretName }}
+    domains:
+      - main: {{ .Values.game.domain }}
+  {{ end }}

@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.4'
+}
+
+group 'de.dataenv.game'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+tasks.named("bootBuildImage") {
+    imageName = "docker.dataenv.de/${rootProject.name}"
+    publish = true
+    tags = ["docker.dataenv.de/${rootProject.name}:${project.version}"]
+    docker {
+        publishRegistry {
+            username = "${DEVOPS_USER}"
+            password = "${DEVOPS_PW}"
+            url = "docker.dataenv.de"
+        }
+    }
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.7.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.4'
+    implementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+    implementation group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '1.5.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.7.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
+    //jpa->hibernate->glassfish:2.3.1 requireres jakarta.xml.bind-api but does not include it. Increase version to 2.3.2 to get it.
+    implementation("org.glassfish.jaxb:jaxb-runtime:2.3.2")
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.4'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
