@@ -60,15 +60,6 @@ public class MoveEntity {
 
     @Transient
     public Result getResult() {
-        if (playerGesture.equals(kiGesture)) {
-            return Result.TIE;
-        } else if (playerGesture.equals(Gesture.SCISSOR) && kiGesture.equals(Gesture.ROCK)) {
-            return Result.LOOSE;
-        }  else if (playerGesture.equals(Gesture.ROCK) && kiGesture.equals(Gesture.SCISSOR)) {
-            return Result.WIN;
-        } else if (playerGesture.ordinal() > kiGesture.ordinal()) {
-            return Result.WIN;
-        }
-        return Result.LOOSE;
+        return this.playerGesture.getResultAgainst(kiGesture);
     }
 }
